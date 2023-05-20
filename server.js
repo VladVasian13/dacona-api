@@ -15,11 +15,19 @@ const port = 3030;
 
 app.use(express.json());
 
+app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    next();
+});
+
 app.get("/", (req, res) => {
     res.send("Hello World!")
 })
 
-app.use('/products', productRoutes)
-
+app.use('/routers', productRoutes)
+app.use('/routers/:itemId', productRoutes)
 
 app.listen(port, () => console.log(`app listening on port ${port}`))
